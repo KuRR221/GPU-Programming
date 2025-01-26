@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Compile GPU_Programming File",
+        "type": "shell",
+        "command": "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin/nvcc",
+        "args": [
+          "-o",
+          "GPU_Programming",
+          "GPU_Programming.cu"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": [],
+        "detail": "Generated task by Visual Studio Code"
+      }
+    ]
+  }
