@@ -3,9 +3,9 @@
 #include <windows.h>
 
 // Defining useful values
-#define PI 3.14159265358979323846
-#define BIN_WIDTH 0.25
-#define MAX_ANGLE 180.0
+#define PI 3.14159265358979323846f
+#define BIN_WIDTH 0.25f
+#define MAX_ANGLE 180.0f
 #define NUM_BINS (int)(MAX_ANGLE / BIN_WIDTH)
 
 int getDevice(int deviceno);
@@ -22,10 +22,10 @@ __global__ void computeAngles(float* alpha1, float* delta1, float* alpha2, float
 
         // Calculate angular separation using the formula
         float cos_theta = sin(d1) * sin(d2) + cos(d1) * cos(d2) * cos(a1 - a2);
-        float theta = acosf(fmaxf(-1.0f, fminf(cos_theta, 1.0f))) * (180.f / PI);
+        float theta = acosf(fmaxf(-1.0f, fminf(cos_theta, 1.0f))) * (MAX_ANGLE / PI);
 
         // Determine the bin index
-        int bin_idx = (int)(floor(theta * (1.0f / BIN_WIDTH))) % NUM_BINS;
+        int bin_idx = (int)(theta / BIN_WIDTH);
         if (bin_idx < NUM_BINS) {
             atomicAdd(&histogram[bin_idx], 1); // Safely update the histogram
         }
@@ -151,7 +151,8 @@ int main(int argc, char** argv) {
 
     //Iterating through histograms
     for (int i = 0; i < NUM_BINS; ++i) {
-
+        
+        if (histogram_RR[i] == 0) continue;
         omegas = (histogram_DD[i]- 2.0f*histogram_DR[i] + histogram_RR[i]) / histogram_RR[i];
         sum_DD += histogram_DD[i];
         sum_DR += histogram_DR[i];
