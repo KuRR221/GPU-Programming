@@ -1,6 +1,6 @@
 # GPU Programming course
 
-GPU Programming solution created by Anton Backman in CUDA that calculated angles between galaxies
+GPU programming course solution created by Anton Backman in CUDA that calculated angles between galaxies
 
 ***
 
